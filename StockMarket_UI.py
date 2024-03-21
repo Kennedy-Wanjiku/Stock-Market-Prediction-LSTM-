@@ -38,7 +38,8 @@ def sentiment(Symbol,API,time_from):
         "function": "NEWS_SENTIMENT",
         "tickers": Symbol,
         "apikey": API,
-        "time_from":time_from,
+        "time_from":formatted_date,
+        "sort": "LATEST",
         "limit":"200"
     }
     response = requests.get(url, params=params)
@@ -49,10 +50,10 @@ def sentiment(Symbol,API,time_from):
 def history(Symbol,API):
     url = "https://www.alphavantage.co/query?"
     params = {
-       "function":"TIME_SERIES_DAILY_ADJUSTED",
+       "function":"TIME_SERIES_DAILY",
        "symbol":Symbol,
        "apikey":API,
-        "outputsize":"full"
+       "outputsize":"full"
     }
     response_HD = requests.get(url, params=params)
     data = response_HD.json()
@@ -74,8 +75,10 @@ with header:
     #st.markdown( 
               # )
     Symbol=st.sidebar.text_input('Enter the name of your stock',"PG").upper()
-    time_from=st.sidebar.text_input('Enter the start date(YYYYMMDDTHHMM)',"20220304T0000")
+    time_from=st.sidebar.text_input('Enter the start date(YYYYMMDDHHMM)',"20220304T0000")
     start_date = time_from[:4] + "-" + time_from[4:6] + "-" + time_from[6:8]
+    formatted_date = time_from[:4] + time_from[4:6] + time_from[6:8] +"T" +time_from[8:12]
+
     # buttons
     with open('C:\\Users\\admin\\Desktop\\BCS 4.2\\Final year project\\Implementation\\Project semi-final\\stockstyle.css') as f: 
          style= f.read()
@@ -92,7 +95,7 @@ with header:
             stock_data =pd.DataFrame(stock_data).T
             #stock_data.columns
 
-            stock_data=stock_data.rename(columns={'1. open':"Open","2. high":"High","3. low":"Low","4. close":"Close","6. volume":"Volume"})
+            stock_data=stock_data.rename(columns={'1. open':"Open","2. high":"High","3. low":"Low","4. close":"Close","5. volume":"Volume"})
             hd_cols=["Open","High","Low","Close","Volume"]
             stock_data=stock_data[hd_cols].astype(float)
             stock_data= stock_data.loc[:start_date,:]
