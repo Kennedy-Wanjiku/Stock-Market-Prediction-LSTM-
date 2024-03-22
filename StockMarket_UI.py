@@ -26,12 +26,9 @@ import streamlit as st
 import time
 from dateutil.relativedelta import relativedelta
 
-
 API="EQ6PLX2EW5FA0DFL"
 
 
-   
-    
 def sentiment(Symbol,API,time_from):
     url = "https://www.alphavantage.co/query"
     params = {
@@ -60,7 +57,7 @@ def history(Symbol,API):
     return data
 
 
-with open('C:\\Users\\admin\\Desktop\\BCS 4.2\\Final year project\\Implementation\\Project semi-final\\styles.css') as f:
+with open('styles.css') as f:
         css = f.read()
 
         st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
@@ -75,12 +72,12 @@ with header:
     #st.markdown( 
               # )
     Symbol=st.sidebar.text_input('Enter the name of your stock',"PG").upper()
-    time_from=st.sidebar.text_input('Enter the start date(YYYYMMDDHHMM)',"20220304T0000")
+    time_from=st.sidebar.text_input('Enter the start date(YYYYMMDDHHMM)',"202203040000")
     start_date = time_from[:4] + "-" + time_from[4:6] + "-" + time_from[6:8]
     formatted_date = time_from[:4] + time_from[4:6] + time_from[6:8] +"T" +time_from[8:12]
 
     # buttons
-    with open('C:\\Users\\admin\\Desktop\\BCS 4.2\\Final year project\\Implementation\\Project semi-final\\stockstyle.css') as f: 
+    with open('stockstyle.css') as f: 
          style= f.read()
     headers=["Historical Data", "Chart", "Sentiments","Predict","About us"]
     
@@ -88,33 +85,38 @@ with header:
     
 
     with tab1:
-            
-        #Historical Data
-            hist_data=history(Symbol,API)
-            stock_data = hist_data["Time Series (Daily)"]
-            stock_data =pd.DataFrame(stock_data).T
-            #stock_data.columns
+        try:
+                
+            #Historical Data
+                hist_data=history(Symbol,API)
+                stock_data = hist_data["Time Series (Daily)"]
+                stock_data =pd.DataFrame(stock_data).T
+                #stock_data.columns
 
-            stock_data=stock_data.rename(columns={'1. open':"Open","2. high":"High","3. low":"Low","4. close":"Close","5. volume":"Volume"})
-            hd_cols=["Open","High","Low","Close","Volume"]
-            stock_data=stock_data[hd_cols].astype(float)
-            stock_data= stock_data.loc[:start_date,:]
-            stock_data.index=pd.to_datetime(stock_data.index,format='%Y-%m-%d')
-            #stock_data.tail()
-           
-            s=stock_data
-            s.index=s.index.date
-            s=stock_data.style.set_properties(**{'background-color': 'transparent',
-                           'color': 'black',
-                           'border-color': 'black'}) 
-            st.markdown("<p class=parag>Historical data upto the previous day</p> "
-                        f"<style>{style}</style>"
-                        
-                        
-            ,unsafe_allow_html=True )               
-            with st.spinner('Please wait...'):
-                 time.sleep(10)     
-            st.dataframe(s,5000,2000)
+                stock_data=stock_data.rename(columns={'1. open':"Open","2. high":"High","3. low":"Low","4. close":"Close","5. volume":"Volume"})
+                hd_cols=["Open","High","Low","Close","Volume"]
+                stock_data=stock_data[hd_cols].astype(float)
+                stock_data= stock_data.loc[:start_date,:]
+                stock_data.index=pd.to_datetime(stock_data.index,format='%Y-%m-%d')
+                #stock_data.tail()
+            
+                s=stock_data
+                s.index=s.index.date
+                s=stock_data.style.set_properties(**{'background-color': 'transparent',
+                            'color': 'black',
+                            'border-color': 'black'}) 
+                st.markdown("<p class=parag>Historical data upto yestersday</p> "
+                            f"<style>{style}</style>"
+                            
+                            
+                ,unsafe_allow_html=True )               
+                with st.spinner('Please wait...'):
+                    time.sleep(10)     
+                st.dataframe(s,5000,2000)
+        except:
+                st.markdown("<p>There was a problem with your internet connection </p>"
+                f"<style> {style} </style>"
+                ,unsafe_allow_html=True)
     with tab2:
      # Create selectbox
             options = ['Open', 'Close', 'High', 'Low']
@@ -183,7 +185,7 @@ with header:
    
     #st.set_page_config(title="Stock Market Analysis and Prediction ", layout="wide")
     #t.image()  
-    with open('C:\\Users\\admin\\Desktop\\BCS 4.2\\Final year project\\Implementation\\Project semi-final\\styles.css') as f:
+    with open('styles.css') as f:
         css = f.read()
 
         st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
@@ -352,8 +354,8 @@ with tab4:
         
 
         from tensorflow.keras.models import *
-        stock_model = "C:\\Users\\admin\\Desktop\\BCS 4.2\\Final year project\\Implementation\\Project semi-final\\Stock_prediction_Timeseries final.h5"
-        #final_input=pd.read_csv("C:\\Users\\admin\\Desktop\\BCS 4.2\\Final year project\\Implementation\\AMZN_final_input.csv")
+        stock_model = "Stock_prediction model.h5"
+        #final_input=pd.read_csv("AMZN_final_input.csv")
         cols = ['Open', 'Close', 'Sentiment_Score_2', 'EMA_50','EMA_200','Trend', 'ROE', 'EPS', 'P/E' ,'symbol_label','High', 'Low']
         model_input= final_input[cols]
         model_input

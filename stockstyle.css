@@ -15,12 +15,12 @@ p.parag{
 	color:Blue;
 	font-size:30px;
 	font-style:bold;
-	bg-color:transparent;
+	background-color:transparent;
 	}
 p{
 	color:black;
 	font-style:bold;
-	bg-color:orange;
+	background-color:transparent;
 	font-size:25px;
 	}
 
