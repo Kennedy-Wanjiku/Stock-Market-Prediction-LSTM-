@@ -372,7 +372,7 @@ with tab4:
         y_test_scaled,x_test_scaled=np.array(y_test_scaled),np.array(x_test_scaled)
         #y_test_scaled
 
-        model = load_model(stock_model)
+        model = keras.models.load_model(stock_model)
         prediction_scaled=model.predict(x_test_scaled)
 
         # create new scaler object with n_features = 2
