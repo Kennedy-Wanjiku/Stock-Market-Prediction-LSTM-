@@ -85,7 +85,6 @@ with header:
     
 
     with tab1:
-        try:
                 
             #Historical Data
                 hist_data=history(Symbol,API)
@@ -113,10 +112,7 @@ with header:
                 with st.spinner('Please wait...'):
                     time.sleep(10)     
                 st.dataframe(s,5000,2000)
-        except:
-                st.markdown("<p>There was a problem with your internet connection </p>"
-                f"<style> {style} </style>"
-                ,unsafe_allow_html=True)
+
     with tab2:
      # Create selectbox
             options = ['Open', 'Close', 'High', 'Low']
