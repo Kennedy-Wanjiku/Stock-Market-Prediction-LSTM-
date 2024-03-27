@@ -371,7 +371,7 @@ with tab4:
         #convert to arrays
         y_test_scaled,x_test_scaled=np.array(y_test_scaled),np.array(x_test_scaled)
         #y_test_scaled
-
+        from tensorflow import keras
         model = keras.models.load_model(stock_model)
         prediction_scaled=model.predict(x_test_scaled)
 
