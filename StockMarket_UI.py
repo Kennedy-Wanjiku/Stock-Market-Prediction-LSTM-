@@ -26,8 +26,8 @@ import streamlit as st
 import time
 from dateutil.relativedelta import relativedelta
 
-API="EQ6PLX2EW5FA0DFL"
-
+#API="EQ6PLX2EW5FA0DFL"
+API =" CIMQS6HOMVKU7C8A"
 
 def sentiment(Symbol,API,time_from):
     url = "https://www.alphavantage.co/query"
