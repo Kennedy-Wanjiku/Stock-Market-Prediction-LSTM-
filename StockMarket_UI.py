@@ -350,7 +350,8 @@ with tab4:
         
 
         from tensorflow.keras.models import *
-        stock_model = "Stock_prediction model.h5"
+        #stock_model = "Stock_prediction model.h5"
+        stock_model =keras.saving.load_model("mymodel93.keras")
         #final_input=pd.read_csv("AMZN_final_input.csv")
         cols = ['Open', 'Close', 'Sentiment_Score_2', 'EMA_50','EMA_200','Trend', 'ROE', 'EPS', 'P/E' ,'symbol_label','High', 'Low']
         model_input= final_input[cols]
