@@ -3,7 +3,7 @@
 
 # In[2]:
 from requests.exceptions import ConnectionError
-import seaborn as sns
+#import seaborn as sns
 import pandas as pd
 import keras
 import numpy as np
